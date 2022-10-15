@@ -5,6 +5,7 @@ import com.example.inventoryservice.common.InventoryConstants;
 import com.example.inventoryservice.common.InventoryServiceException;
 import com.example.inventoryservice.entity.InventoryEntity;
 import com.example.inventoryservice.model.Inventory;
+import com.example.inventoryservice.model.InventoryDetailsResponse;
 import com.example.inventoryservice.model.Response;
 import com.example.inventoryservice.repository.InventoryRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -78,5 +79,20 @@ public class InventoryService {
             String msg = "server error occurred while updating inventory" + e.getMessage();
             throw new InventoryServiceException(msg);
         }
+    }
+
+    public Response getInventoryDetails(String productName) {
+        InventoryDetailsResponse inventoryDetails = new InventoryDetailsResponse();
+        Long notAvailable = 0L;
+        Optional<InventoryEntity> inventoryEntity = inventoryRepository.findByProductName(productName);
+        if (inventoryEntity.isPresent()) {
+            InventoryEntity entity = inventoryEntity.get();
+            inventoryDetails.setProductName(entity.getProductName());
+            inventoryDetails.setQuantity(entity.getQuantity());
+        } else {
+            inventoryDetails.setProductName(productName);
+            inventoryDetails.setQuantity(notAvailable);
+        }
+        return new Response(200, inventoryDetails);
     }
 }

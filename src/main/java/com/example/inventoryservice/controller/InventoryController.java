@@ -5,10 +5,7 @@ import com.example.inventoryservice.model.Response;
 import com.example.inventoryservice.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/inventory")
@@ -19,7 +16,13 @@ public class InventoryController {
 
     @PostMapping("/update")
     public ResponseEntity<Response> updateInventory(@RequestBody Inventory inventory) throws Exception {
-      Response response = inventoryService.updateInventory(inventory);
-      return ResponseEntity.status(response.getStatus()).body(response);
+        Response response = inventoryService.updateInventory(inventory);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+    @GetMapping("/{productName}")
+    public ResponseEntity getInventoryDetails(@PathVariable String productName) {
+        Response response = inventoryService.getInventoryDetails(productName);
+        return ResponseEntity.status(response.getStatus()).body(response);
     }
 }
