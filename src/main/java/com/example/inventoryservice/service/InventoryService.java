@@ -21,7 +21,7 @@ public class InventoryService {
     @Autowired
     private InventoryRepository inventoryRepository;
 
-    public Response updateInventory(Inventory inventory) throws Exception {
+    public  synchronized Response updateInventory(Inventory inventory) throws Exception {
         String msg = null;
         Optional<InventoryEntity> optionalInventory = inventoryRepository.findByProductName(inventory.getProductName());
         if (optionalInventory.isPresent()) {
