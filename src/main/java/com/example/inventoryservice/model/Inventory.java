@@ -1,7 +1,5 @@
 package com.example.inventoryservice.model;
 
-import com.example.inventoryservice.common.InventoryConstants;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
